@@ -9,6 +9,27 @@ using System.Timers;
 using Peak.Can.Basic;
 using TPCANHandle = System.UInt16;
 
+/* Autor: Dave Plouffe
+ * 
+ * PCANCom is used to send and receive CAN message.
+ * 
+ * Each time that a CAN message has been received,
+ * the event "OnCANMessageReceivedEvent" is raised with
+ * the CAN message. So, every component that need to
+ * receive data from the CAN must be subscribed to 
+ * this event. This can be done with theses lines:
+ * 
+ *      PCANCom.Instance.OnCANMessageReceived += CANMessageReceived;
+ * 
+ *      private void CANMessageReceived(object sender, PCANComEventArgs e)
+ *      {
+ *          if (e.CanMsg.DATA[1] == CANDeviceConstant.HARDWARE_FILTER_GRIPPER)
+ *          {
+ *              // CAN TREATMENT...
+ *          }
+ *      }
+ * 
+ * */
 
 namespace PCAN
 {
@@ -157,17 +178,17 @@ namespace PCAN
         private void postMessage(TPCANMsg CANMsg)
         {
             //CANQueue.printReceivedPacket(CANMsg);
-            OnMessageReceivedEvent(new PCANComEventArgs(CANMsg));
+            OnCANMessageReceivedEvent(new PCANComEventArgs(CANMsg));
         }
 
-        protected virtual void OnMessageReceivedEvent(PCANComEventArgs e)
+        protected virtual void OnCANMessageReceivedEvent(PCANComEventArgs e)
         {
-            if (OnMessageReceived != null)
+            if (OnCANMessageReceived != null)
             {
-                OnMessageReceived(this, e);
+                OnCANMessageReceived(this, e);
             }
         }
-        public event EventHandler<PCANComEventArgs> OnMessageReceived;
+        public event EventHandler<PCANComEventArgs> OnCANMessageReceived;
         #endregion
 
     }

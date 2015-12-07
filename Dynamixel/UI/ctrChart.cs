@@ -13,6 +13,15 @@ using Dynamixel.Driver;
 using Dynamixel.Events;
 using PCAN;
 
+/* Autor: Dave Plouffe
+ * 
+ * ctrChart is used to plot the current temperature and load of a motor.
+ * 
+ * This component isn't used anymore but have not been suppressed as
+ * it could be useful in some way in the future.
+ * 
+ * */
+
 namespace GripperControler.Dynamixel.UI
 {
     public partial class ctrChart : UserControl
@@ -28,7 +37,7 @@ namespace GripperControler.Dynamixel.UI
         {
             InitializeComponent();
             lblCurrentInfo.Text = "";
-            PCANCom.Instance.OnMessageReceived += CANMessageReceived;
+            PCANCom.Instance.OnCANMessageReceived += CANMessageReceived;
             DynamixelEvents.Instance.OnMotorSelectedChange += MotorDataReceived;
         }
         

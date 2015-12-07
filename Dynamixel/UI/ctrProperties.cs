@@ -12,6 +12,53 @@ using Dynamixel.Driver;
 using Dynamixel.Events;
 using PCAN;
 
+/* Autor: Dave Plouffe
+ * 
+ * ctrProperties is used to show current ROM and RAM values of the selected motor
+ * that can be modified (exept for the model number and the firmware number).
+ * 
+ * This component sends CAN messages to retrieve the information needed which are:
+ *  
+ * ROM:
+ *  - Model Number
+ *  - Version of Firmware
+ *  - ID
+ *  - Baud Rate
+ *  - Return Delay Time
+ *  - CW Angle Limit
+ *  - CCW Angle Limit
+ *  - Temperature Limit
+ *  - Lowest Voltage Limit
+ *  - Highest Voltage Limit
+ *  - Max Torque
+ *  - Status Return Level
+ *  - Alarm LED
+ *  - Alarm Shutdown
+ *  
+ * RAM:
+ *  - Torque Enable
+ *  - CW Compliance Margin
+ *  - CCW Compliance Margin
+ *  - CW Compliance Slope
+ *  - CCW Compliance Slope
+ *  - Goal Position
+ *  - Moving Speed
+ *  - Torque Limit
+ *  - Lock
+ *  - Punch
+ * 
+ * PSoC EEPROM:
+ *  - Motor Type
+ * 
+ * To work properly, the motor type should be set before everything else. After
+ * that the motor type has been set, a command should be sent to define the
+ * angle limits associated with the motor type. This task can be done by simply
+ * modifying the angle limits properties in the ROM. Those things must be done
+ * in the right order to work, otherwise the "open gripper" CAN message won't
+ * work.
+ * 
+ * */
+
 namespace GripperControler.Dynamixel.UI
 {
     public partial class ctrProperties : UserControl
@@ -47,7 +94,7 @@ namespace GripperControler.Dynamixel.UI
             dataGrid.Rows[0].ReadOnly = true;
             dataGrid.Rows[1].ReadOnly = true;
 
-            PCANCom.Instance.OnMessageReceived += CANMessageReceived;
+            PCANCom.Instance.OnCANMessageReceived += CANMessageReceived;
             DynamixelEvents.Instance.OnMotorSelectedChange += MotorDataReceived;
             DynamixelEvents.Instance.OnMessageBusEvent += OnMessageBusEventReceived;
         }

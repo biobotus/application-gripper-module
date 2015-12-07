@@ -114,8 +114,6 @@
       <DependentUpon>ctrProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Dynamixel\Driver\DynamixelData.cs" />
-    <Compile Include="Dynamixel\Driver\DynamixelCom.cs" />
-    <Compile Include="Dynamixel\Driver\DynamixelPacket.cs" />
     <Compile Include="Dynamixel\Driver\DynamixelConst.cs" />
     <Compile Include="Main\frmGripper.cs">
       <SubType>Form</SubType>

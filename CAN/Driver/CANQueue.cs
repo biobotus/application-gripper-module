@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 using Peak.Can.Basic;
 
+/* Autor: Dave Plouffe
+ * 
+ * CANQueue is used to stack all CAN messages that need to be sent to the CAN bus.
+ * 
+ * */
+
 namespace PCAN
 {
     class CANQueue

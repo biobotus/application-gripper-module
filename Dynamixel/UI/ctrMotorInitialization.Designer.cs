@@ -38,7 +38,7 @@
             // 
             // txtID
             // 
-            this.txtID.Location = new System.Drawing.Point(85, 156);
+            this.txtID.Location = new System.Drawing.Point(85, 172);
             this.txtID.Maximum = new decimal(new int[] {
             253,
             0,
@@ -55,7 +55,7 @@
             // 
             // btnInitialize
             // 
-            this.btnInitialize.Location = new System.Drawing.Point(6, 183);
+            this.btnInitialize.Location = new System.Drawing.Point(6, 199);
             this.btnInitialize.Name = "btnInitialize";
             this.btnInitialize.Size = new System.Drawing.Size(75, 23);
             this.btnInitialize.TabIndex = 17;
@@ -66,7 +66,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 158);
+            this.label1.Location = new System.Drawing.Point(3, 174);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(76, 13);
             this.label1.TabIndex = 16;
@@ -81,7 +81,7 @@
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(503, 146);
+            this.textBox1.Size = new System.Drawing.Size(503, 163);
             this.textBox1.TabIndex = 15;
             this.textBox1.Text = resources.GetString("textBox1.Text");
             // 

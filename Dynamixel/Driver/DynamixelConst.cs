@@ -4,6 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/* Autor: Dave Plouffe
+ * 
+ * DynamixelConst contains all instructions of a dynamixel motor.
+ * 
+ * */
+
 namespace Dynamixel.Driver
 {
     public enum DynamixelModel

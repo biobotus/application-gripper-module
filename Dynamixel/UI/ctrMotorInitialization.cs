@@ -10,6 +10,21 @@ using System.Windows.Forms;
 
 using Dynamixel.Driver;
 
+/* Autor: Dave Plouffe
+ * 
+ * ctrMotorInitialization is used to initialize new dynamixel motors.
+ * 
+ * When you buy a brand new Dynamixel motor, it comes with default parameters 
+ * which prevent the application to work correctly and detecting it. To configure your 
+ * brand new Dynamixel motor, please select one id that isn’t used by any of your motors 
+ * and then click the button “initialize motor”. The id must be between 0 and 253 inclusively. 
+ * You’ll be able to change it after the configuration process. If you have more than one new 
+ * motor to configure, you'll have to initialize them one by one. The initialization won’t affect 
+ * motors already configured even if they are plugged in because they don't respond to the
+ * same baudrate.
+ * 
+ * */
+
 namespace GripperControler.Dynamixel.UI
 {
     public partial class ctrMotorInitialization : UserControl

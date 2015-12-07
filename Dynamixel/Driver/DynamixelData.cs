@@ -4,6 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+/* Autor: Dave Plouffe
+ * 
+ * DynamixelData contains only basic information about a dynamixel motor.
+ * 
+ * This class is used to transfer information between components. Each
+ * component that work with dynamixel motor should know at least the
+ * model of the motor, the firmware and the id.
+ * 
+ * With the motor model, it is possible to know all properties that can
+ * be modified. The firmware model is not used but it could be useful in
+ * the futur.
+ * 
+ * */
+
 namespace Dynamixel.Driver
 {
     public struct DynamixelData
@@ -11,17 +26,6 @@ namespace Dynamixel.Driver
         public UInt16 model;
         public byte firmware;
         public byte id;
-        public byte baudrate;
-
-        /*
-        public byte led;
-        public UInt16 goalPosition;
-        public UInt16 presentPosition;
-        public UInt16 presentLoad;
-        public byte presentVoltage;
-        public byte presentTemperature;
-        //*/
-
 
         public double getAngleStep()
         {

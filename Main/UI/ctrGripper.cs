@@ -11,6 +11,20 @@ using System.Windows.Forms;
 using Dynamixel.Driver;
 using PCAN;
 
+/* Autor: Dave Plouffe
+ * 
+ * ctrGripper is used for testing purpose.
+ * 
+ * Depending on the button clicked, it sends
+ * a CAN message to the gripper to open the
+ * gripper according to the percentage written
+ * in the component "txtPercentage" value.
+ * 
+ * It can also send a CAN message to close the
+ * gripper. Closing the gripper is the same as
+ * opening the gripper but with a 0 percent value.
+ * 
+ * */
 
 namespace GripperControler.Main.UI
 {
@@ -24,7 +38,7 @@ namespace GripperControler.Main.UI
         private void btnOpenGripper_Click(object sender, EventArgs e)
         {
             CANQueue.Instance.clearQueue();
-            Dynamixel2CANQueue.openGripper((byte)txtPourcentage.Value);
+            Dynamixel2CANQueue.openGripper((byte)txtPercentage.Value);
             CANQueue.Instance.executeFirst();
         }
 

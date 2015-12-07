@@ -11,6 +11,16 @@ using System.Windows.Forms;
 using Peak.Can.Basic;
 using TPCANHandle = System.UInt16;
 
+/* Autor: Dave Plouffe
+ * 
+ * ctrCanConnector is used to configure the connexion over the CAN bus and 
+ * to connect the application to the bus.
+ * .
+ * This component is a simplified version of the PCAN basic API application
+ * which can be found at this address:
+ *      http://www.peak-system.com/PCAN-USB.199.0.html?L=1
+ * 
+ * */
 
 namespace PCAN
 {

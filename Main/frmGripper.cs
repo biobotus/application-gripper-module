@@ -12,6 +12,12 @@ using System.IO.Ports;
 using Dynamixel.Driver;
 using PCAN;
 
+/* Autor: Dave Plouffe
+ * 
+ * frmGripper is the application startup.
+ * 
+ * */
+
 namespace GripperControler
 {
     public partial class frmGripper : Form
@@ -30,11 +36,19 @@ namespace GripperControler
             PCANCom.Instance.disconnect();
         }
 
+        /*
+         * Every message that are sent to the CAN Queue will be sent to 
+         * the CAN bus every time the timer "tmrSendCANMessage" ticks.
+         * */
         private void tmrSendCANMessage_Tick(object sender, EventArgs e)
         {
             CANQueue.Instance.executeFirst();
         }
 
+        /*
+         * This line of code is useful to connect the application
+         * on the CAN bus without clicking the "connect" button
+         * */
         private void frmGripper_Load(object sender, EventArgs e)
         {
             ctrCanConnector1.btnConnect_Click(sender, e);

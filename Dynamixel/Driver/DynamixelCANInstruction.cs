@@ -4,12 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/* Autor: Dave Plouffe
+ * 
+ * DynamixelCANInstruction contains all CAN instructions
+ * that can be sent to the gripper module.
+ * 
+ * */
+
 namespace Dynamixel.Driver
 {
     class DynamixelCANInstruction
     {
         // Dynamixel instruction: [BYTE 1] [BYTE 2] [...] [BYTE 8]
-        // An instruction sent to the Dynamixel always begin
+        // An instruction sent to the Dynamixel always begins
         // with the instruction id and is followed by some data.
         //
         // [BYTE 1] = instruction id 
@@ -17,11 +24,10 @@ namespace Dynamixel.Driver
         // [BYTE 3] = data
         // [BYTE n] = data
 
-
         public const byte SET_Z_AXIS_HOME = 0;
         public const byte SET_Z_AXIS_POSITION = 1;
 
-        public const byte OPEN_GRIPPER      = 2;    // [OPEN_GRIPPER]
+        public const byte OPEN_GRIPPER      = 2;    // [OPEN_GRIPPER][percent]
 
         public const byte SET_MOVING_SPEED  = 3;    // [SET_MOVING_SPEED] [id] [speed]
         public const byte SET_TORQUE        = 4;    // [SET_TORQUE] [ID] [torque]

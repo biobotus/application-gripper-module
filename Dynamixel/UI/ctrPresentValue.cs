@@ -13,6 +13,20 @@ using Dynamixel.Driver;
 using Dynamixel.Events; 
 using PCAN;
 
+/* Autor: Dave Plouffe
+ * 
+ * ctrPresentValue is used to show current RAM values of the selected motor
+ * that can't be modified.
+ * 
+ * This component sends CAN message to retrieve the information needed which are:
+ *  - Present Position      (2bytes)
+ *  - Present Speed         (2bytes)
+ *  - Present Load          (2bytes)
+ *  - Present Voltage       (1byte)
+ *  - Present Temperature   (1byte)
+ * 
+ * */
+
 namespace GripperControler.Dynamixel.UI
 {
     public partial class ctrPresentValue : UserControl
@@ -37,7 +51,7 @@ namespace GripperControler.Dynamixel.UI
             addPresentProperties();
             initDelay();
             DynamixelEvents.Instance.OnMotorSelectedChange += MotorDataReceived;
-            PCANCom.Instance.OnMessageReceived += CANMessageReceived;
+            PCANCom.Instance.OnCANMessageReceived += CANMessageReceived;
         }
         #endregion
 

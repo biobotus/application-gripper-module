@@ -118,6 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="textBox1.Text" xml:space="preserve">
-    <value>When you buy a brand new Dynamixel motor, it comes with default parameters which prevent the application to work correctly and detecting it. To configure your brand new Dynamixel motor, please select one id that isn’t use by any of your motor and click the button “initialize motor”. The id must be between 0 and 253 inclusively. You’ll be able to change it after the configuration. If you have more than one new motor to configure, you have to initialize them one by one. The initialization won’t affect motors already configured even if they are plugged.</value>
+    <value>When you buy a brand new Dynamixel motor, it comes with default parameters which prevent the application to work correctly and detecting it. To configure your brand new Dynamixel motor, please select one id that isn’t used by any of your motors and then click the button “initialize motor”. The id must be between 0 and 253 inclusively. You’ll be able to change it after the configuration process. If you have more than one new motor to configure, you'll have to initialize them one by one. The initialization won’t affect  motors already configured even if they are plugged in because they don't respond to the same baudrate.</value>
   </data>
 </root>

@@ -6,6 +6,20 @@ using System.Threading.Tasks;
 
 using Dynamixel.Driver;
 
+/* Autor: Dave Plouffe
+ * 
+ * DynamixelEvents contains the definition of the events used to
+ * communicate between components.
+ * 
+ * The event "OnMotorSelectedChange" is used to send the selected motor
+ * to every component who are subscribed.
+ * 
+ * The event "OnMessageBusEvent" is used to exchange information
+ * between components like the goal position, angle limits and
+ * the current position.
+ * 
+ * */
+
 namespace Dynamixel.Events
 {
     class DynamixelEvents

@@ -7,6 +7,15 @@ using System.Threading.Tasks;
 using PCAN;
 using Peak.Can.Basic;
 
+/* Autor: Dave Plouffe
+ * 
+ * Dynamixel2CANQueue is used to send CAN message to the CAN queue.
+ * 
+ * This class contains every CAN message that can be sent to
+ * the gripper module.
+ * 
+ * */
+
 namespace Dynamixel.Driver
 {
     class Dynamixel2CANQueue
@@ -112,7 +121,6 @@ namespace Dynamixel.Driver
 
         #endregion
 
-
         #region RAM
 
         #region GET PROPERTIES
@@ -202,13 +210,24 @@ namespace Dynamixel.Driver
 
         #endregion
 
-
         #region GRIPPER CONTROL
 
-        public static void openGripper(byte pourcent)
+        public static void openGripper(byte percent)
         {
-            if (pourcent > 100) pourcent = 100;
-                sendMessage(DynamixelCANInstruction.OPEN_GRIPPER, pourcent, 0, 0, 0, 0, 0, 0);
+            if (percent > 100) percent = 100;
+            sendMessage(DynamixelCANInstruction.OPEN_GRIPPER, percent, 0, 0, 0, 0, 0, 0);
+        }
+
+        public static void tiltGripper(byte percent)
+        {
+            if (percent > 100) percent = 100;
+            sendMessage(DynamixelCANInstruction.TILT, percent, 0, 0, 0, 0, 0, 0);
+        }
+
+        public static void rotateGripper(byte percent)
+        {
+            if (percent > 100) percent = 100;
+            sendMessage(DynamixelCANInstruction.ROTATE, percent, 0, 0, 0, 0, 0, 0);
         }
 
         #endregion

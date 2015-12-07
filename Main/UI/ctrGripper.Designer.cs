@@ -30,9 +30,9 @@
         {
             this.btnOpenGripper = new System.Windows.Forms.Button();
             this.btnCloseGripper = new System.Windows.Forms.Button();
-            this.txtPourcentage = new System.Windows.Forms.NumericUpDown();
+            this.txtPercentage = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPourcentage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPercentage)).BeginInit();
             this.SuspendLayout();
             // 
             // btnOpenGripper
@@ -55,13 +55,13 @@
             this.btnCloseGripper.UseVisualStyleBackColor = true;
             this.btnCloseGripper.Click += new System.EventHandler(this.btnCloseGripper_Click);
             // 
-            // txtPourcentage
+            // txtPercentage
             // 
-            this.txtPourcentage.Location = new System.Drawing.Point(95, 20);
-            this.txtPourcentage.Name = "txtPourcentage";
-            this.txtPourcentage.Size = new System.Drawing.Size(43, 20);
-            this.txtPourcentage.TabIndex = 20;
-            this.txtPourcentage.Value = new decimal(new int[] {
+            this.txtPercentage.Location = new System.Drawing.Point(95, 20);
+            this.txtPercentage.Name = "txtPercentage";
+            this.txtPercentage.Size = new System.Drawing.Size(43, 20);
+            this.txtPercentage.TabIndex = 20;
+            this.txtPercentage.Value = new decimal(new int[] {
             100,
             0,
             0,
@@ -72,21 +72,21 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(96, 4);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(71, 13);
+            this.label1.Size = new System.Drawing.Size(65, 13);
             this.label1.TabIndex = 21;
-            this.label1.Text = "Pourcentage:";
+            this.label1.Text = "Percentage:";
             // 
             // ctrGripper
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.txtPourcentage);
+            this.Controls.Add(this.txtPercentage);
             this.Controls.Add(this.btnCloseGripper);
             this.Controls.Add(this.btnOpenGripper);
             this.Name = "ctrGripper";
             this.Size = new System.Drawing.Size(298, 251);
-            ((System.ComponentModel.ISupportInitialize)(this.txtPourcentage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPercentage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -96,7 +96,7 @@
 
         private System.Windows.Forms.Button btnOpenGripper;
         private System.Windows.Forms.Button btnCloseGripper;
-        private System.Windows.Forms.NumericUpDown txtPourcentage;
+        private System.Windows.Forms.NumericUpDown txtPercentage;
         private System.Windows.Forms.Label label1;
     }
 }

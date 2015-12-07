@@ -11,6 +11,25 @@ using System.Windows.Forms;
 using Dynamixel.Driver;
 using Dynamixel.Events;
 
+/* Autor: Dave Plouffe
+ * 
+ * ctrMotorPosition is used to show current settings about angle limits, position and goal position
+ * of the selected motor.
+ * 
+ * The angle limits are shown in red.
+ * The goal position is shown in blue.
+ * The current position is shown in green.
+ * 
+ * If you double-click on the component, the goal position
+ * will be changed for clicked angle.
+ * 
+ * This component does not send directly CAN messages. Instead,
+ * it sends a message on the "message bus" to indicate that
+ * we are trying to modify the goal position. This component
+ * is only used to simplify the visualisation of the current settings.
+ * 
+ * */
+
 namespace GripperControler.Dynamixel.UI
 {
     public partial class ctrMotorPosition : UserControl
