@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 /* Autor: Dave Plouffe
  * 
- * DynamixelCANInstruction contains all CAN instructions
+ * GripperCANInst contains all CAN instructions
  * that can be sent to the gripper module.
  * 
  * */
 
-namespace Dynamixel.Driver
+namespace Gripper.Driver
 {
-    class DynamixelCANInstruction
+    class GripperCANInst
     {
         // Dynamixel instruction: [BYTE 1] [BYTE 2] [...] [BYTE 8]
         // An instruction sent to the Dynamixel always begins

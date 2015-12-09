@@ -1,4 +1,4 @@
-﻿namespace GripperControler.Dynamixel.UI
+﻿namespace Gripper.UI
 {
     partial class ctrDynamixelScanner
     {

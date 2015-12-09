@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
 
-using Dynamixel.Driver;
-using PCAN;
+using Gripper.UI;
+using PCAN.Driver;
 
 /* Autor: Dave Plouffe
  * 

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using PCAN.Driver;
 using Peak.Can.Basic;
 using TPCANHandle = System.UInt16;
 
@@ -22,7 +23,7 @@ using TPCANHandle = System.UInt16;
  * 
  * */
 
-namespace PCAN
+namespace PCAN.UI
 {
     public partial class ctrCanConnector : UserControl
     {

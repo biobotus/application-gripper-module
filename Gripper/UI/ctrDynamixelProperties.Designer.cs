@@ -1,6 +1,6 @@
-﻿namespace GripperControler.Dynamixel.UI
+﻿namespace Gripper.UI
 {
-    partial class ctrProperties
+    partial class ctrDynamixelProperties
     {
         /// <summary> 
         /// Required designer variable.

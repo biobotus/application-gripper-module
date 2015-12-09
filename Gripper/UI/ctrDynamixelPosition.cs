@@ -8,12 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using Dynamixel.Driver;
-using Dynamixel.Events;
+using Gripper.Driver;
+using Gripper.Events;
 
 /* Autor: Dave Plouffe
  * 
- * ctrMotorPosition is used to show current settings about angle limits, position and goal position
+ * ctrDynamixelPosition is used to show current settings about angle limits, position and goal position
  * of the selected motor.
  * 
  * The angle limits are shown in red.
@@ -26,13 +26,13 @@ using Dynamixel.Events;
  * This component does not send directly CAN messages. Instead,
  * it sends a message on the "message bus" to indicate that
  * we are trying to modify the goal position. This component
- * is only used to simplify the visualisation of the current settings.
+ * is only used to simplify the visualization of the current settings.
  * 
  * */
 
-namespace GripperControler.Dynamixel.UI
+namespace Gripper.UI
 {
-    public partial class ctrMotorPosition : UserControl
+    public partial class ctrDynamixelPosition : UserControl
     {
 
         #region MEMBER
@@ -68,7 +68,7 @@ namespace GripperControler.Dynamixel.UI
 
 
         #region INITIALIZATION
-        public ctrMotorPosition()
+        public ctrDynamixelPosition()
         {
             InitializeComponent();
         }
@@ -76,14 +76,14 @@ namespace GripperControler.Dynamixel.UI
         private void ctrMotorPosition_Load(object sender, EventArgs e)
         {
             ctrMotorPosition_Resize(sender, e);
-            DynamixelEvents.Instance.OnMotorSelectedChange += MotorDataReceived;
-            DynamixelEvents.Instance.OnMessageBusEvent += OnMessageBusEventReceived;
+            GripperEvent.Instance.OnMotorSelectedChange += MotorDataReceived;
+            GripperEvent.Instance.OnMessageBusEvent += OnMessageBusEventReceived;
         }
         #endregion
 
 
         #region NEW MOTOR SELECTED MESSAGE (OBSERVER PATTERN)
-        private void MotorDataReceived(object sender, DynamixelEvents.MotorSelectedChangeArgs e)
+        private void MotorDataReceived(object sender, GripperEvent.MotorSelectedChangeArgs e)
         {
             motor = e.motor;
             goalPosition.X = 0;
@@ -93,25 +93,25 @@ namespace GripperControler.Dynamixel.UI
             this.Invalidate();
         }
 
-        private void OnMessageBusEventReceived(object sender, DynamixelEvents.MessageBusArgs e)
+        private void OnMessageBusEventReceived(object sender, GripperEvent.MessageBusArgs e)
         {
             switch (e.type)
             {
-                case DynamixelEvents.MessageBusType.PRESENT_POSITION_CHANGE:
+                case GripperEvent.MessageBusType.PRESENT_POSITION_CHANGE:
                     presentPosition = getPointFromDynamixelData((ushort)e.value);
                     this.Invalidate();
                     break;
 
-                case DynamixelEvents.MessageBusType.GOAL_POSITION_CHANGE:
+                case GripperEvent.MessageBusType.GOAL_POSITION_CHANGE:
                     PointF pt = getPointFromDynamixelData((ushort)e.value);
                     changeGoalPosition((int)pt.X, (int)pt.Y);
                     break;
 
-                case DynamixelEvents.MessageBusType.CW_ANGLE_LIMIT_CHANGE:
+                case GripperEvent.MessageBusType.CW_ANGLE_LIMIT_CHANGE:
                     ptCWAngleLimit = getPointFromDynamixelData((ushort)e.value);
                     break;
 
-                case DynamixelEvents.MessageBusType.CCW_ANGLE_LIMIT_CHANGE:
+                case GripperEvent.MessageBusType.CCW_ANGLE_LIMIT_CHANGE:
                     ptCCWAngleLimit = getPointFromDynamixelData((ushort)e.value);
                     break;
             }
@@ -260,7 +260,7 @@ namespace GripperControler.Dynamixel.UI
 
         private void sendGoalPositionEvent(double angle)
         {
-            DynamixelEvents.Instance.postMessageBusEvent(DynamixelEvents.MessageBusType.GOAL_POSITION_CHANGE, motor.getPositionFromAngle(angle));
+            GripperEvent.Instance.postMessageBusEvent(GripperEvent.MessageBusType.GOAL_POSITION_CHANGE, motor.getPositionFromAngle(angle));
         }
 
         private void drawCircle(Graphics graph, Pen pen, float radius, PointF center)

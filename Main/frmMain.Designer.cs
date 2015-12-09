@@ -37,13 +37,13 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabNewMotorInitialization = new System.Windows.Forms.TabPage();
             this.tmrSendCANMessage = new System.Windows.Forms.Timer(this.components);
-            this.ctrCanConnector1 = new PCAN.ctrCanConnector();
-            this.ctrDynamixelScanner1 = new GripperControler.Dynamixel.UI.ctrDynamixelScanner();
-            this.ctrPresentValue1 = new GripperControler.Dynamixel.UI.ctrPresentValue();
-            this.ctrProperties1 = new GripperControler.Dynamixel.UI.ctrProperties();
-            this.ctrMotorPosition1 = new GripperControler.Dynamixel.UI.ctrMotorPosition();
-            this.ctrMotorInitialization1 = new GripperControler.Dynamixel.UI.ctrMotorInitialization();
-            this.ctrGripper1 = new GripperControler.Main.UI.ctrGripper();
+            this.ctrCanConnector1 = new PCAN.UI.ctrCanConnector();
+            this.ctrDynamixelScanner1 = new Gripper.UI.ctrDynamixelScanner();
+            this.ctrPresentValue1 = new Gripper.UI.ctrDynamixelPresentValue();
+            this.ctrProperties1 = new Gripper.UI.ctrDynamixelProperties();
+            this.ctrMotorPosition1 = new Gripper.UI.ctrDynamixelPosition();
+            this.ctrMotorInitialization1 = new Gripper.UI.ctrDynamixelInitialization();
+            this.ctrGripper1 = new Gripper.UI.ctrGripper();
             this.tabMotorSettings.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabCAN.SuspendLayout();
@@ -228,18 +228,18 @@
         private System.Windows.Forms.StatusStrip statusBar;
         private System.Windows.Forms.TabPage tabMotorSettings;
         private System.Windows.Forms.TabPage tabCAN;
-        private PCAN.ctrCanConnector ctrCanConnector1;
+        private PCAN.UI.ctrCanConnector ctrCanConnector1;
         private System.Windows.Forms.TabControl tabControl;
-        private Dynamixel.UI.ctrDynamixelScanner ctrDynamixelScanner1;
+        private Gripper.UI.ctrDynamixelScanner ctrDynamixelScanner1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Timer tmrSendCANMessage;
         private System.Windows.Forms.TabPage tabNewMotorInitialization;
-        private Dynamixel.UI.ctrMotorInitialization ctrMotorInitialization1;
-        private Dynamixel.UI.ctrPresentValue ctrPresentValue1;
-        private Dynamixel.UI.ctrProperties ctrProperties1;
-        private Dynamixel.UI.ctrMotorPosition ctrMotorPosition1;
+        private Gripper.UI.ctrDynamixelInitialization ctrMotorInitialization1;
+        private Gripper.UI.ctrDynamixelPresentValue ctrPresentValue1;
+        private Gripper.UI.ctrDynamixelProperties ctrProperties1;
+        private Gripper.UI.ctrDynamixelPosition ctrMotorPosition1;
         private System.Windows.Forms.TabPage tabPage1;
-        private Main.UI.ctrGripper ctrGripper1;
+        private Gripper.UI.ctrGripper ctrGripper1;
     }
 }
 

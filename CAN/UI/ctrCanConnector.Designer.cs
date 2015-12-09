@@ -1,4 +1,4 @@
-﻿namespace PCAN
+﻿namespace PCAN.UI
 {
     partial class ctrCanConnector
     {

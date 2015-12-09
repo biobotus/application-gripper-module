@@ -31,7 +31,7 @@ using TPCANHandle = System.UInt16;
  * 
  * */
 
-namespace PCAN
+namespace PCAN.Driver
 {
     class PCANCom
     {

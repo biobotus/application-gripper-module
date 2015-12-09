@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 
-using Dynamixel.Driver;
-using Dynamixel.Events; 
-using PCAN;
+using Gripper.Driver;
+using Gripper.Events; 
+using PCAN.Driver;
 
 /* Autor: Dave Plouffe
  * 
- * ctrPresentValue is used to show current RAM values of the selected motor
+ * ctrDynamixelPresentValue is used to show current RAM values of the selected motor
  * that can't be modified.
  * 
  * This component sends CAN message to retrieve the information needed which are:
@@ -27,9 +27,9 @@ using PCAN;
  * 
  * */
 
-namespace GripperControler.Dynamixel.UI
+namespace Gripper.UI
 {
-    public partial class ctrPresentValue : UserControl
+    public partial class ctrDynamixelPresentValue : UserControl
     {
 
         #region MEMBER
@@ -45,19 +45,19 @@ namespace GripperControler.Dynamixel.UI
 
 
         #region INITIALIZATION
-        public ctrPresentValue()
+        public ctrDynamixelPresentValue()
         {
             InitializeComponent();
             addPresentProperties();
             initDelay();
-            DynamixelEvents.Instance.OnMotorSelectedChange += MotorDataReceived;
+            GripperEvent.Instance.OnMotorSelectedChange += MotorDataReceived;
             PCANCom.Instance.OnCANMessageReceived += CANMessageReceived;
         }
         #endregion
 
 
         #region NEW MOTOR SELECTED MESSAGE (OBSERVER PATTERN)
-        private void MotorDataReceived(object sender, DynamixelEvents.MotorSelectedChangeArgs e)
+        private void MotorDataReceived(object sender, GripperEvent.MotorSelectedChangeArgs e)
         {
             motor = e.motor;
             tmrGetPresentValue.Start();
@@ -80,17 +80,17 @@ namespace GripperControler.Dynamixel.UI
                     stopwatch.Reset();
                     // RAM
                     // get the Present position and the present speed
-                    Dynamixel2CANQueue.getPresentPositionAndPresentSpeed(DynamixelConst.PRESENT_POSITION_L, motorID);
+                    Gripper2CANQueue.getPresentPositionAndPresentSpeed(DynamixelConst.PRESENT_POSITION_L, motorID);
                     CANQueue.Instance.executeLast();
                     stopwatch.Start();
                     break;
                 case 1:
                     // get the present load, the present voltage and the present temperature
-                    Dynamixel2CANQueue.getPresentLoadAndPresentVoltageAndPresentTemperature(DynamixelConst.PRESENT_LOAD_L, motorID);
+                    Gripper2CANQueue.getPresentLoadAndPresentVoltageAndPresentTemperature(DynamixelConst.PRESENT_LOAD_L, motorID);
                     break;
                 case 2:
                     // get the present led status
-                    Dynamixel2CANQueue.getLedStatus(DynamixelConst.LED, motorID);
+                    Gripper2CANQueue.getLedStatus(DynamixelConst.LED, motorID);
                     break;
             }
             counter = (counter + 1) % 3;
@@ -132,7 +132,7 @@ namespace GripperControler.Dynamixel.UI
                         displayCommunicationDelay();
                         dataGrid.Rows[0].Cells[2].Value = ((packet[5] << 8) | packet[4]).ToString(); // present position
                         dataGrid.Rows[1].Cells[2].Value = ((packet[7] << 8) | packet[6]).ToString(); // present speed
-                        DynamixelEvents.Instance.postMessageBusEvent(DynamixelEvents.MessageBusType.PRESENT_POSITION_CHANGE, (uint)((packet[5] << 8) + packet[4]));
+                        GripperEvent.Instance.postMessageBusEvent(GripperEvent.MessageBusType.PRESENT_POSITION_CHANGE, (uint)((packet[5] << 8) + packet[4]));
                         break;
                     case DynamixelConst.PRESENT_LOAD_L:
                         dataGrid.Rows[2].Cells[2].Value = (((packet[5] << 8) | packet[4]) & 0x3ff).ToString(); // present load

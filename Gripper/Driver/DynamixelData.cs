@@ -19,7 +19,7 @@ using System.Threading.Tasks;
  * 
  * */
 
-namespace Dynamixel.Driver
+namespace Gripper.Driver
 {
     public struct DynamixelData
     {

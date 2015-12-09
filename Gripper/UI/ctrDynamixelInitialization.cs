@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using Dynamixel.Driver;
+using Gripper.Driver;
 
 /* Autor: Dave Plouffe
  * 
- * ctrMotorInitialization is used to initialize new dynamixel motors.
+ * ctrDynamixelInitialization is used to initialize new dynamixel motors.
  * 
  * When you buy a brand new Dynamixel motor, it comes with default parameters 
  * which prevent the application to work correctly and detecting it. To configure your 
@@ -25,11 +25,11 @@ using Dynamixel.Driver;
  * 
  * */
 
-namespace GripperControler.Dynamixel.UI
+namespace Gripper.UI
 {
-    public partial class ctrMotorInitialization : UserControl
+    public partial class ctrDynamixelInitialization : UserControl
     {
-        public ctrMotorInitialization()
+        public ctrDynamixelInitialization()
         {
             InitializeComponent();
         }
@@ -47,15 +47,15 @@ namespace GripperControler.Dynamixel.UI
              *  6. Set the baudrate at 0.5Mbps
              *  7. Switch back the communcation rate between the dynamixel and the motor to 0.5Mbps
              */ 
-            Dynamixel2CANQueue.sendMessage(DynamixelCANInstruction.SET_CLOCK_8M, 0, 0, 0, 0, 0, 0, 0);
-            Dynamixel2CANQueue.addSetInstruction(DynamixelConst.BROADCAST_ID, DynamixelConst.ALARM_SHUTDOWN, 1, 0x04);
-            Dynamixel2CANQueue.addSetInstruction(DynamixelConst.BROADCAST_ID, DynamixelConst.MAX_TORQUE_L, 2, 200);
-            Dynamixel2CANQueue.addSetInstruction(DynamixelConst.BROADCAST_ID, DynamixelConst.TORQUE_LIMIT_L, 2, 200);
-            Dynamixel2CANQueue.addSetInstruction(DynamixelConst.BROADCAST_ID, DynamixelConst.RETURN_LEVEL, 1, 1);
-            Dynamixel2CANQueue.addSetInstruction(DynamixelConst.BROADCAST_ID, DynamixelConst.RETURN_DELAY_TIME, 1, 50);
-            Dynamixel2CANQueue.addSetInstruction(DynamixelConst.BROADCAST_ID, DynamixelConst.ID, 1, (byte)(txtID.Value));
-            Dynamixel2CANQueue.addSetInstruction(DynamixelConst.BROADCAST_ID, DynamixelConst.BAUD_RATE, 1, 0x03);
-            Dynamixel2CANQueue.sendMessage(DynamixelCANInstruction.SET_CLOCK_4M, 0, 0, 0, 0, 0, 0, 0);
+            Gripper2CANQueue.sendMessage(GripperCANInst.SET_CLOCK_8M, 0, 0, 0, 0, 0, 0, 0);
+            Gripper2CANQueue.addSetInstruction(DynamixelConst.BROADCAST_ID, DynamixelConst.ALARM_SHUTDOWN, 1, 0x04);
+            Gripper2CANQueue.addSetInstruction(DynamixelConst.BROADCAST_ID, DynamixelConst.MAX_TORQUE_L, 2, 200);
+            Gripper2CANQueue.addSetInstruction(DynamixelConst.BROADCAST_ID, DynamixelConst.TORQUE_LIMIT_L, 2, 200);
+            Gripper2CANQueue.addSetInstruction(DynamixelConst.BROADCAST_ID, DynamixelConst.RETURN_LEVEL, 1, 1);
+            Gripper2CANQueue.addSetInstruction(DynamixelConst.BROADCAST_ID, DynamixelConst.RETURN_DELAY_TIME, 1, 50);
+            Gripper2CANQueue.addSetInstruction(DynamixelConst.BROADCAST_ID, DynamixelConst.ID, 1, (byte)(txtID.Value));
+            Gripper2CANQueue.addSetInstruction(DynamixelConst.BROADCAST_ID, DynamixelConst.BAUD_RATE, 1, 0x03);
+            Gripper2CANQueue.sendMessage(GripperCANInst.SET_CLOCK_4M, 0, 0, 0, 0, 0, 0, 0);
         }
     }
 }

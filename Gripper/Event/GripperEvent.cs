@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Dynamixel.Driver;
+using Gripper.Driver;
 
 /* Autor: Dave Plouffe
  * 
- * DynamixelEvents contains the definition of the events used to
+ * GripperEvent contains event definitions used to
  * communicate between components.
  * 
  * The event "OnMotorSelectedChange" is used to send the selected motor
@@ -20,20 +20,20 @@ using Dynamixel.Driver;
  * 
  * */
 
-namespace Dynamixel.Events
+namespace Gripper.Events
 {
-    class DynamixelEvents
+    class GripperEvent
     {
 
         #region INSTANCE
-        private static DynamixelEvents instance;
-        public static DynamixelEvents Instance
+        private static GripperEvent instance;
+        public static GripperEvent Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new DynamixelEvents();
+                    instance = new GripperEvent();
                 }
                 return instance;
             }

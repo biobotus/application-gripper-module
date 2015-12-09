@@ -4,21 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using PCAN;
+using PCAN.Driver;
 using Peak.Can.Basic;
 
 /* Autor: Dave Plouffe
  * 
- * Dynamixel2CANQueue is used to send CAN message to the CAN queue.
+ * Gripper2CANQueue is used to send CAN message to the CAN queue.
  * 
  * This class contains every CAN message that can be sent to
  * the gripper module.
  * 
  * */
 
-namespace Dynamixel.Driver
+namespace Gripper.Driver
 {
-    class Dynamixel2CANQueue
+    class Gripper2CANQueue
     {
 
         #region ROM
@@ -215,19 +215,19 @@ namespace Dynamixel.Driver
         public static void openGripper(byte percent)
         {
             if (percent > 100) percent = 100;
-            sendMessage(DynamixelCANInstruction.OPEN_GRIPPER, percent, 0, 0, 0, 0, 0, 0);
+            sendMessage(GripperCANInst.OPEN_GRIPPER, percent, 0, 0, 0, 0, 0, 0);
         }
 
         public static void tiltGripper(byte percent)
         {
             if (percent > 100) percent = 100;
-            sendMessage(DynamixelCANInstruction.TILT, percent, 0, 0, 0, 0, 0, 0);
+            sendMessage(GripperCANInst.TILT, percent, 0, 0, 0, 0, 0, 0);
         }
 
         public static void rotateGripper(byte percent)
         {
             if (percent > 100) percent = 100;
-            sendMessage(DynamixelCANInstruction.ROTATE, percent, 0, 0, 0, 0, 0, 0);
+            sendMessage(GripperCANInst.ROTATE, percent, 0, 0, 0, 0, 0, 0);
         }
 
         #endregion
@@ -254,7 +254,7 @@ namespace Dynamixel.Driver
         {
             TPCANMsg CANMsg = new TPCANMsg();
             CANMsg.DATA = new byte[8];
-            CANMsg.DATA[0] = DynamixelCANInstruction.GET_DATA;
+            CANMsg.DATA[0] = GripperCANInst.GET_DATA;
             CANMsg.DATA[1] = id;
             CANMsg.DATA[2] = adress;
             CANMsg.DATA[3] = (byte)(nbOfByte % 5);
@@ -266,7 +266,7 @@ namespace Dynamixel.Driver
         {
             TPCANMsg CANMsg = new TPCANMsg();
             CANMsg.DATA = new byte[8];
-            CANMsg.DATA[0] = DynamixelCANInstruction.GET_MOTOR_TYPE;
+            CANMsg.DATA[0] = GripperCANInst.GET_MOTOR_TYPE;
             CANMsg.DATA[1] = id;
             CANMsg.DATA[2] = treatingFunction;
             CANMsg.ID = CANDeviceConstant.HARDWARE_FILTER_GRIPPER;
@@ -278,7 +278,7 @@ namespace Dynamixel.Driver
         {
             TPCANMsg CANMsg = new TPCANMsg();
             CANMsg.DATA = new byte[8];
-            CANMsg.DATA[0] = DynamixelCANInstruction.SET_DATA;
+            CANMsg.DATA[0] = GripperCANInst.SET_DATA;
             CANMsg.DATA[1] = id;
             CANMsg.DATA[2] = adress;
             CANMsg.DATA[3] = (byte)(nbOfByte % 3);

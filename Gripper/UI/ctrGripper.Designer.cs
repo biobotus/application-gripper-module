@@ -1,4 +1,4 @@
-﻿namespace GripperControler.Main.UI
+﻿namespace Gripper.UI
 {
     partial class ctrGripper
     {

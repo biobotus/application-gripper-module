@@ -8,8 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using Dynamixel.Driver;
-using PCAN;
+using Gripper.Driver;
+using PCAN.Driver;
 
 /* Autor: Dave Plouffe
  * 
@@ -22,11 +22,11 @@ using PCAN;
  * 
  * It can also send a CAN message to close the
  * gripper. Closing the gripper is the same as
- * opening the gripper but with a 0 percent value.
+ * opening it but with a 0 percent value.
  * 
  * */
 
-namespace GripperControler.Main.UI
+namespace Gripper.UI
 {
     public partial class ctrGripper : UserControl
     {
@@ -38,14 +38,14 @@ namespace GripperControler.Main.UI
         private void btnOpenGripper_Click(object sender, EventArgs e)
         {
             CANQueue.Instance.clearQueue();
-            Dynamixel2CANQueue.openGripper((byte)txtPercentage.Value);
+            Gripper2CANQueue.openGripper((byte)txtPercentage.Value);
             CANQueue.Instance.executeFirst();
         }
 
         private void btnCloseGripper_Click(object sender, EventArgs e)
         {
             CANQueue.Instance.clearQueue();
-            Dynamixel2CANQueue.openGripper(0);
+            Gripper2CANQueue.openGripper(0);
             CANQueue.Instance.executeFirst();
         }
 

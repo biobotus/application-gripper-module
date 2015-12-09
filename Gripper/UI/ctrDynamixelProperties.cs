@@ -8,13 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using Dynamixel.Driver;
-using Dynamixel.Events;
-using PCAN;
+using Gripper.Driver;
+using Gripper.Events;
+using PCAN.Driver;
 
 /* Autor: Dave Plouffe
  * 
- * ctrProperties is used to show current ROM and RAM values of the selected motor
+ * ctrDynamixelProperties is used to show current ROM and RAM values of the selected motor
  * that can be modified (exept for the model number and the firmware number).
  * 
  * This component sends CAN messages to retrieve the information needed which are:
@@ -50,8 +50,8 @@ using PCAN;
  * PSoC EEPROM:
  *  - Motor Type
  * 
- * To work properly, the motor type should be set before everything else. After
- * that the motor type has been set, a command should be sent to define the
+ * IMPORTANT: To work properly, the motor type should be set before everything else. After
+ * that motor type has been set, a command should be sent to define
  * angle limits associated with the motor type. This task can be done by simply
  * modifying the angle limits properties in the ROM. Those things must be done
  * in the right order to work, otherwise the "open gripper" CAN message won't
@@ -59,9 +59,9 @@ using PCAN;
  * 
  * */
 
-namespace GripperControler.Dynamixel.UI
+namespace Gripper.UI
 {
-    public partial class ctrProperties : UserControl
+    public partial class ctrDynamixelProperties : UserControl
     {
 
         #region MEMBER
@@ -80,7 +80,7 @@ namespace GripperControler.Dynamixel.UI
         #endregion
 
         #region INITIALIZAION
-        public ctrProperties()
+        public ctrDynamixelProperties()
         {
             InitializeComponent();
         }
@@ -95,24 +95,24 @@ namespace GripperControler.Dynamixel.UI
             dataGrid.Rows[1].ReadOnly = true;
 
             PCANCom.Instance.OnCANMessageReceived += CANMessageReceived;
-            DynamixelEvents.Instance.OnMotorSelectedChange += MotorDataReceived;
-            DynamixelEvents.Instance.OnMessageBusEvent += OnMessageBusEventReceived;
+            GripperEvent.Instance.OnMotorSelectedChange += MotorDataReceived;
+            GripperEvent.Instance.OnMessageBusEvent += OnMessageBusEventReceived;
         }
         #endregion
 
         #region NEW MOTOR SELECTED MESSAGE (OBSERVER PATTERN)
-        private void MotorDataReceived(object sender, DynamixelEvents.MotorSelectedChangeArgs e)
+        private void MotorDataReceived(object sender, GripperEvent.MotorSelectedChangeArgs e)
         {
             motor = e.motor;
             generateCanQueueMessage(motor.id);
         }
 
-        private void OnMessageBusEventReceived(object sender, DynamixelEvents.MessageBusArgs e)
+        private void OnMessageBusEventReceived(object sender, GripperEvent.MessageBusArgs e)
         {
-            if (e.type == DynamixelEvents.MessageBusType.GOAL_POSITION_CHANGE)
+            if (e.type == GripperEvent.MessageBusType.GOAL_POSITION_CHANGE)
             {
                 if (e.value != int.Parse(dataGrid.Rows[19].Cells[2].Value.ToString()))
-                    Dynamixel2CANQueue.sendInstruction(DynamixelCANInstruction.MOVE, motor.id, (ushort)e.value);
+                    Gripper2CANQueue.sendInstruction(GripperCANInst.MOVE, motor.id, (ushort)e.value);
 
                 dataGrid.Rows[19].Cells[2].Value = (e.value).ToString(); // goal position
             }
@@ -150,12 +150,12 @@ namespace GripperControler.Dynamixel.UI
                         dataGrid.Rows[3].Cells[2].Value = packet[4].ToString(); // baudrate
                         dataGrid.Rows[4].Cells[2].Value = packet[5].ToString(); // return delay time
                         dataGrid.Rows[5].Cells[2].Value = ((packet[7] << 8) | packet[6]).ToString(); // CW angle limit
-                        DynamixelEvents.Instance.postMessageBusEvent(DynamixelEvents.MessageBusType.CW_ANGLE_LIMIT_CHANGE, (uint)((packet[7] << 8) + packet[6]));
+                        GripperEvent.Instance.postMessageBusEvent(GripperEvent.MessageBusType.CW_ANGLE_LIMIT_CHANGE, (uint)((packet[7] << 8) + packet[6]));
                         break;
                     case DynamixelConst.CCW_ANGLE_LIMIT_L:
                         dataGrid.Rows[6].Cells[2].Value = ((packet[5] << 8) | packet[4]).ToString(); // CCW angle limit
                         dataGrid.Rows[7].Cells[2].Value = packet[7].ToString(); // temperature limit
-                        DynamixelEvents.Instance.postMessageBusEvent(DynamixelEvents.MessageBusType.CCW_ANGLE_LIMIT_CHANGE, (uint)((packet[5] << 8) + packet[4]));
+                        GripperEvent.Instance.postMessageBusEvent(GripperEvent.MessageBusType.CCW_ANGLE_LIMIT_CHANGE, (uint)((packet[5] << 8) + packet[4]));
                         break;
                     case DynamixelConst.LOWEST_LIMIT_VOLTAGE:
                         dataGrid.Rows[8].Cells[2].Value = packet[4].ToString(); // lowest limit voltage
@@ -177,7 +177,7 @@ namespace GripperControler.Dynamixel.UI
                         dataGrid.Rows[17].Cells[2].Value = packet[4].ToString(); // cw compliance slope
                         dataGrid.Rows[18].Cells[2].Value = packet[5].ToString(); // ccw compliance slope
                         dataGrid.Rows[19].Cells[2].Value = ((packet[7] << 8) + packet[6]).ToString(); // goal position
-                        DynamixelEvents.Instance.postMessageBusEvent(DynamixelEvents.MessageBusType.GOAL_POSITION_CHANGE, (uint)((packet[7] << 8) + packet[6]));
+                        GripperEvent.Instance.postMessageBusEvent(GripperEvent.MessageBusType.GOAL_POSITION_CHANGE, (uint)((packet[7] << 8) + packet[6]));
                         break;
                     case DynamixelConst.MOVING_SPEED_L:
                         dataGrid.Rows[20].Cells[2].Value = ((packet[5] << 8) + packet[4]).ToString(); // moving speed
@@ -187,7 +187,7 @@ namespace GripperControler.Dynamixel.UI
                         dataGrid.Rows[22].Cells[2].Value = (packet[4]).ToString(); // lock
                         dataGrid.Rows[23].Cells[2].Value = ((packet[6] << 8) + packet[5]).ToString(); // punch
                         break;
-                    case DynamixelCANInstruction.GET_MOTOR_TYPE:
+                    case GripperCANInst.GET_MOTOR_TYPE:
                         switch (packet[4])
                         {
                             case 0:
@@ -227,36 +227,36 @@ namespace GripperControler.Dynamixel.UI
             switch (constData)
             {
     /* ROM */   case DATA_MODEL_FIRMWARE_ID: // to get the "model number", the "version firmware"
-                    Dynamixel2CANQueue.getModelAndFirmware(DynamixelConst.MODEL_NUMBER_L, motorID);
+                    Gripper2CANQueue.getModelAndFirmware(DynamixelConst.MODEL_NUMBER_L, motorID);
                     break;
                 case DATA_BAUDRATE_RETURNDELAY_CWANGLE: // to get the "baudrate", "return delay time" and "CW angle limit" 
-                    Dynamixel2CANQueue.getBaudrateAndReturnDelayTimeAndCWAngleLimit(DynamixelConst.BAUD_RATE, motorID);
+                    Gripper2CANQueue.getBaudrateAndReturnDelayTimeAndCWAngleLimit(DynamixelConst.BAUD_RATE, motorID);
                     break;
                 case DATA_CCWANGLE_TEMPERATURE: // to get the "CCW angle limit" and "temperature limit"
-                    Dynamixel2CANQueue.getCCWAngleLimitAndTemperatureLimit(DynamixelConst.CCW_ANGLE_LIMIT_L, motorID);
+                    Gripper2CANQueue.getCCWAngleLimitAndTemperatureLimit(DynamixelConst.CCW_ANGLE_LIMIT_L, motorID);
                     break;
                 case DATA_LOWESTVOLTAGE_HIGHESTVOLTAGE_MAXTORQUE: // to get the "lowest limit voltage", "highest limit voltage" and "max torque"
-                    Dynamixel2CANQueue.getLowestLimitVoltageAndHighestLimitVoltageAndMaxTorque(DynamixelConst.LOWEST_LIMIT_VOLTAGE, motorID);
+                    Gripper2CANQueue.getLowestLimitVoltageAndHighestLimitVoltageAndMaxTorque(DynamixelConst.LOWEST_LIMIT_VOLTAGE, motorID);
                     break;
                 case DATA_STATUSLEVEL_ALARMLED_ALARMSHUTDOWN: // to get the "status return level", "alarm led" and "alarm shutdown"
-                    Dynamixel2CANQueue.getStatusReturnLevelAndAlarmLedAndAlarmShutdown(DynamixelConst.RETURN_LEVEL, motorID);
+                    Gripper2CANQueue.getStatusReturnLevelAndAlarmLedAndAlarmShutdown(DynamixelConst.RETURN_LEVEL, motorID);
                     break;
 
     /* RAM */   case DATA_TORQUEENABLE_LED_CWMARGIN_CCWMARGIN: // to get the "torque enable", "led", "cw compliance margin" and "ccw compliance margin"
-                    Dynamixel2CANQueue.getTorqueEnableAndLedAndCWComplianceMarginAndCCWComplianceMargin(DynamixelConst.TORQUE_ENABLE, motorID);
+                    Gripper2CANQueue.getTorqueEnableAndLedAndCWComplianceMarginAndCCWComplianceMargin(DynamixelConst.TORQUE_ENABLE, motorID);
                     break;
                 case DATA_CWSLOPE_CCWSLOPE_GOALPOSITION:// to get the "cw compliance slope", "ccw compliance slope" and "goal position"
-                    Dynamixel2CANQueue.getCWComplianceSlopeAndCCWComplianceSlopeAndGoalPosition(DynamixelConst.CW_COMPLIANCE_SLOPE, motorID);
+                    Gripper2CANQueue.getCWComplianceSlopeAndCCWComplianceSlopeAndGoalPosition(DynamixelConst.CW_COMPLIANCE_SLOPE, motorID);
                     break;
                 case DATA_MOVINGSPEED_TORQUELIMIT: // to get the "moving speed" and "torque limit"
-                    Dynamixel2CANQueue.getMovingSpeedAndTorqueLimit(DynamixelConst.MOVING_SPEED_L, motorID);
+                    Gripper2CANQueue.getMovingSpeedAndTorqueLimit(DynamixelConst.MOVING_SPEED_L, motorID);
                     break;
                 case DATA_LOCK_PUNCH: // to get "lock" and "punch" properties
-                    Dynamixel2CANQueue.getLockAndPunch(DynamixelConst.LOCK, motorID);
+                    Gripper2CANQueue.getLockAndPunch(DynamixelConst.LOCK, motorID);
                     break;
 
    /* PSOC */  case DATA_GRIPPER: // to get the motor type (rotate, tilt, right, left)
-                    Dynamixel2CANQueue.addGetMotorType(DynamixelCANInstruction.GET_MOTOR_TYPE, motorID);
+                    Gripper2CANQueue.addGetMotorType(GripperCANInst.GET_MOTOR_TYPE, motorID);
                     break;
             }
         }
@@ -395,99 +395,99 @@ namespace GripperControler.Dynamixel.UI
                                     MessageBox.Show("The value must be a number between 0 and 253.", "Error");
                                 else
                                 {
-                                    Dynamixel2CANQueue.setMotorID(motor.id, (byte)value);
+                                    Gripper2CANQueue.setMotorID(motor.id, (byte)value);
                                     addToCanQueue(motor.id, DATA_MODEL_FIRMWARE_ID);
                                 }
                                 break;
                             case 3: // baudrate
                                 if (MessageBox.Show(this, "WARNING: Changing the baudrate will cause the motor to stop responding unless you modify the microcontroler communication rate also. The new baudrate will be " + ((2000000) / (value + 1)).ToString() + "baud.", "WARNING", MessageBoxButtons.OKCancel) == DialogResult.OK)
                                 {
-                                    Dynamixel2CANQueue.setBaudrate(motor.id, (byte)value);
+                                    Gripper2CANQueue.setBaudrate(motor.id, (byte)value);
                                     addToCanQueue(motor.id, DATA_BAUDRATE_RETURNDELAY_CWANGLE);
                                 }
                                 break;
                             case 4: // return delay time                                
-                                Dynamixel2CANQueue.setReturnDelayTime(motor.id, (byte)value);
+                                Gripper2CANQueue.setReturnDelayTime(motor.id, (byte)value);
                                 addToCanQueue(motor.id, DATA_BAUDRATE_RETURNDELAY_CWANGLE);
                                 break;
                             case 5: // CW angle limit
-                                Dynamixel2CANQueue.setCWAngleLimit(motor.id, value);
+                                Gripper2CANQueue.setCWAngleLimit(motor.id, value);
                                 addToCanQueue(motor.id, DATA_BAUDRATE_RETURNDELAY_CWANGLE);
                                 break;
                             case 6: // CCW angle limit
-                                Dynamixel2CANQueue.setCCWAngleLimit(motor.id, value);
+                                Gripper2CANQueue.setCCWAngleLimit(motor.id, value);
                                 addToCanQueue(motor.id, DATA_CCWANGLE_TEMPERATURE);
                                 break;
                             case 7: // temperature limit
-                                Dynamixel2CANQueue.setTemperatureLimit(motor.id, (byte)value);
+                                Gripper2CANQueue.setTemperatureLimit(motor.id, (byte)value);
                                 addToCanQueue(motor.id, DATA_CCWANGLE_TEMPERATURE);
                                 break;
                             case 8: // lowest limit voltage
-                                Dynamixel2CANQueue.setLowestLimitVoltage(motor.id, (byte)value);
+                                Gripper2CANQueue.setLowestLimitVoltage(motor.id, (byte)value);
                                 addToCanQueue(motor.id, DATA_LOWESTVOLTAGE_HIGHESTVOLTAGE_MAXTORQUE);
                                 break;
                             case 9: // highest limit voltage
-                                Dynamixel2CANQueue.setHighestLimitVoltage(motor.id, (byte)value);
+                                Gripper2CANQueue.setHighestLimitVoltage(motor.id, (byte)value);
                                 addToCanQueue(motor.id, DATA_LOWESTVOLTAGE_HIGHESTVOLTAGE_MAXTORQUE);
                                 break;
                             case 10:// max torque
-                                Dynamixel2CANQueue.setMaxTorque(motor.id, value);
+                                Gripper2CANQueue.setMaxTorque(motor.id, value);
                                 addToCanQueue(motor.id, DATA_LOWESTVOLTAGE_HIGHESTVOLTAGE_MAXTORQUE);
                                 break;
                             case 11:// status return level
-                                Dynamixel2CANQueue.setStatusReturnLevel(motor.id, (byte)value);
+                                Gripper2CANQueue.setStatusReturnLevel(motor.id, (byte)value);
                                 addToCanQueue(motor.id, DATA_STATUSLEVEL_ALARMLED_ALARMSHUTDOWN);
                                 break;
                             case 12:// alarm led
-                                Dynamixel2CANQueue.setAlarmLed(motor.id, (byte)value);
+                                Gripper2CANQueue.setAlarmLed(motor.id, (byte)value);
                                 addToCanQueue(motor.id, DATA_STATUSLEVEL_ALARMLED_ALARMSHUTDOWN);
                                 break;
                             case 13:// alarm shutdown
-                                Dynamixel2CANQueue.setAlarmShutdown(motor.id, (byte)value);
+                                Gripper2CANQueue.setAlarmShutdown(motor.id, (byte)value);
                                 addToCanQueue(motor.id, DATA_STATUSLEVEL_ALARMLED_ALARMSHUTDOWN);
                                 break;
                             case 14:// torque enable
-                                Dynamixel2CANQueue.setTorqueEnable(motor.id, (byte)value);
+                                Gripper2CANQueue.setTorqueEnable(motor.id, (byte)value);
                                 addToCanQueue(motor.id, DATA_TORQUEENABLE_LED_CWMARGIN_CCWMARGIN);
                                 break;
                             case 15:// cw compliance margin
-                                Dynamixel2CANQueue.setCWComplianceMargin(motor.id, (byte)value);
+                                Gripper2CANQueue.setCWComplianceMargin(motor.id, (byte)value);
                                 addToCanQueue(motor.id, DATA_TORQUEENABLE_LED_CWMARGIN_CCWMARGIN);
                                 break;
                             case 16:// ccw compliance margin
-                                Dynamixel2CANQueue.setCCWComplianceMargin(motor.id, (byte)value);
+                                Gripper2CANQueue.setCCWComplianceMargin(motor.id, (byte)value);
                                 addToCanQueue(motor.id, DATA_TORQUEENABLE_LED_CWMARGIN_CCWMARGIN);
                                 break;
                             case 17:// cw compliance slope
-                                Dynamixel2CANQueue.setCWComplianceSlope(motor.id, (byte)value);
+                                Gripper2CANQueue.setCWComplianceSlope(motor.id, (byte)value);
                                 addToCanQueue(motor.id, DATA_CWSLOPE_CCWSLOPE_GOALPOSITION);
                                 break;
                             case 18:// ccw compliance slope
-                                Dynamixel2CANQueue.setCCWComplianceSlope(motor.id, (byte)value);
+                                Gripper2CANQueue.setCCWComplianceSlope(motor.id, (byte)value);
                                 addToCanQueue(motor.id, DATA_CWSLOPE_CCWSLOPE_GOALPOSITION);
                                 break;
                             case 19:// goal position
-                                Dynamixel2CANQueue.setGoalPosition(motor.id, value);
+                                Gripper2CANQueue.setGoalPosition(motor.id, value);
                                 addToCanQueue(motor.id, DATA_CWSLOPE_CCWSLOPE_GOALPOSITION);
                                 break;
                             case 20:// moving speed
-                                Dynamixel2CANQueue.setMovingSpeed(motor.id, value);
+                                Gripper2CANQueue.setMovingSpeed(motor.id, value);
                                 addToCanQueue(motor.id, DATA_MOVINGSPEED_TORQUELIMIT);
                                 break;
                             case 21:// torque limit
-                                Dynamixel2CANQueue.setTorqueLimit(motor.id, value);
+                                Gripper2CANQueue.setTorqueLimit(motor.id, value);
                                 addToCanQueue(motor.id, DATA_MOVINGSPEED_TORQUELIMIT);
                                 break;
                             case 22: // lock
-                                Dynamixel2CANQueue.setLock(motor.id, (byte)value);
+                                Gripper2CANQueue.setLock(motor.id, (byte)value);
                                 addToCanQueue(motor.id, DATA_LOCK_PUNCH);
                                 break;
                             case 23: // punch
-                                Dynamixel2CANQueue.setPunch(motor.id, value);
+                                Gripper2CANQueue.setPunch(motor.id, value);
                                 addToCanQueue(motor.id, DATA_LOCK_PUNCH);
                                 break;
                             case 24:
-                                Dynamixel2CANQueue.sendInstruction(DynamixelCANInstruction.SET_MOTOR_TYPE, motor.id, value);
+                                Gripper2CANQueue.sendInstruction(GripperCANInst.SET_MOTOR_TYPE, motor.id, value);
                                 addToCanQueue(motor.id, DATA_GRIPPER);
                                 break;
                         }

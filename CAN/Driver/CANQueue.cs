@@ -12,7 +12,7 @@ using Peak.Can.Basic;
  * 
  * */
 
-namespace PCAN
+namespace PCAN.Driver
 {
     class CANQueue
     {

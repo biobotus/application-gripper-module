@@ -1,6 +1,6 @@
-﻿namespace GripperControler.Dynamixel.UI
+﻿namespace Gripper.UI
 {
-    partial class ctrMotorInitialization
+    partial class ctrDynamixelInitialization
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ctrMotorInitialization));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ctrDynamixelInitialization));
             this.txtID = new System.Windows.Forms.NumericUpDown();
             this.btnInitialize = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();

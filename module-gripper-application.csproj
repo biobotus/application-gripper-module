@@ -74,57 +74,57 @@
     </Compile>
     <Compile Include="CAN\Driver\PCANBasic.cs" />
     <Compile Include="CAN\Driver\PCANCom.cs" />
-    <Compile Include="Dynamixel\Driver\DynamixelCANInstruction.cs" />
-    <Compile Include="Dynamixel\Event\DynamixelEvents.cs" />
-    <Compile Include="Dynamixel\UI\ctrChart.cs">
+    <Compile Include="Gripper\Driver\GripperCANInst.cs" />
+    <Compile Include="Gripper\Event\GripperEvent.cs" />
+    <Compile Include="Gripper\UI\ctrDynamixelTemperatureChart.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Dynamixel\UI\ctrChart.Designer.cs">
-      <DependentUpon>ctrChart.cs</DependentUpon>
+    <Compile Include="Gripper\UI\ctrDynamixelTemperatureChart.Designer.cs">
+      <DependentUpon>ctrDynamixelTemperatureChart.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dynamixel\UI\ctrDynamixelScanner.cs">
+    <Compile Include="Gripper\UI\ctrDynamixelScanner.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Dynamixel\UI\ctrDynamixelScanner.Designer.cs">
+    <Compile Include="Gripper\UI\ctrDynamixelScanner.Designer.cs">
       <DependentUpon>ctrDynamixelScanner.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dynamixel\Driver\Dynamixel2CAN.cs" />
-    <Compile Include="Dynamixel\UI\ctrMotorInitialization.cs">
+    <Compile Include="Gripper\Driver\Gripper2CANQueue.cs" />
+    <Compile Include="Gripper\UI\ctrDynamixelInitialization.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Dynamixel\UI\ctrMotorInitialization.Designer.cs">
-      <DependentUpon>ctrMotorInitialization.cs</DependentUpon>
+    <Compile Include="Gripper\UI\ctrDynamixelInitialization.Designer.cs">
+      <DependentUpon>ctrDynamixelInitialization.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dynamixel\UI\ctrMotorPosition.cs">
+    <Compile Include="Gripper\UI\ctrDynamixelPosition.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Dynamixel\UI\ctrMotorPosition.Designer.cs">
-      <DependentUpon>ctrMotorPosition.cs</DependentUpon>
+    <Compile Include="Gripper\UI\ctrDynamixelPosition.Designer.cs">
+      <DependentUpon>ctrDynamixelPosition.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dynamixel\UI\ctrPresentValue.cs">
+    <Compile Include="Gripper\UI\ctrDynamixelPresentValue.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Dynamixel\UI\ctrPresentValue.Designer.cs">
-      <DependentUpon>ctrPresentValue.cs</DependentUpon>
+    <Compile Include="Gripper\UI\ctrDynamixelPresentValue.Designer.cs">
+      <DependentUpon>ctrDynamixelPresentValue.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dynamixel\UI\ctrProperties.cs">
+    <Compile Include="Gripper\UI\ctrDynamixelProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Dynamixel\UI\ctrProperties.Designer.cs">
-      <DependentUpon>ctrProperties.cs</DependentUpon>
+    <Compile Include="Gripper\UI\ctrDynamixelProperties.Designer.cs">
+      <DependentUpon>ctrDynamixelProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dynamixel\Driver\DynamixelData.cs" />
-    <Compile Include="Dynamixel\Driver\DynamixelConst.cs" />
-    <Compile Include="Main\frmGripper.cs">
+    <Compile Include="Gripper\Driver\DynamixelData.cs" />
+    <Compile Include="Gripper\Driver\DynamixelConst.cs" />
+    <Compile Include="Main\frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main\frmGripper.Designer.cs">
-      <DependentUpon>frmGripper.cs</DependentUpon>
+    <Compile Include="Main\frmMain.Designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main\UI\ctrGripper.cs">
+    <Compile Include="Gripper\UI\ctrGripper.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Main\UI\ctrGripper.Designer.cs">
+    <Compile Include="Gripper\UI\ctrGripper.Designer.cs">
       <DependentUpon>ctrGripper.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -132,28 +132,28 @@
     <EmbeddedResource Include="CAN\UI\ctrCanConnector.resx">
       <DependentUpon>ctrCanConnector.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dynamixel\UI\ctrChart.resx">
-      <DependentUpon>ctrChart.cs</DependentUpon>
+    <EmbeddedResource Include="Gripper\UI\ctrDynamixelTemperatureChart.resx">
+      <DependentUpon>ctrDynamixelTemperatureChart.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dynamixel\UI\ctrDynamixelScanner.resx">
+    <EmbeddedResource Include="Gripper\UI\ctrDynamixelScanner.resx">
       <DependentUpon>ctrDynamixelScanner.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dynamixel\UI\ctrMotorInitialization.resx">
-      <DependentUpon>ctrMotorInitialization.cs</DependentUpon>
+    <EmbeddedResource Include="Gripper\UI\ctrDynamixelInitialization.resx">
+      <DependentUpon>ctrDynamixelInitialization.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dynamixel\UI\ctrMotorPosition.resx">
-      <DependentUpon>ctrMotorPosition.cs</DependentUpon>
+    <EmbeddedResource Include="Gripper\UI\ctrDynamixelPosition.resx">
+      <DependentUpon>ctrDynamixelPosition.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dynamixel\UI\ctrPresentValue.resx">
-      <DependentUpon>ctrPresentValue.cs</DependentUpon>
+    <EmbeddedResource Include="Gripper\UI\ctrDynamixelPresentValue.resx">
+      <DependentUpon>ctrDynamixelPresentValue.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dynamixel\UI\ctrProperties.resx">
-      <DependentUpon>ctrProperties.cs</DependentUpon>
+    <EmbeddedResource Include="Gripper\UI\ctrDynamixelProperties.resx">
+      <DependentUpon>ctrDynamixelProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Main\frmGripper.resx">
-      <DependentUpon>frmGripper.cs</DependentUpon>
+    <EmbeddedResource Include="Main\frmMain.resx">
+      <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Main\UI\ctrGripper.resx">
+    <EmbeddedResource Include="Gripper\UI\ctrGripper.resx">
       <DependentUpon>ctrGripper.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

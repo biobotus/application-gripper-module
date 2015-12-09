@@ -9,22 +9,22 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
-using Dynamixel.Driver;
-using Dynamixel.Events;
-using PCAN;
+using Gripper.Driver;
+using Gripper.Events;
+using PCAN.Driver;
 
 /* Autor: Dave Plouffe
  * 
- * ctrChart is used to plot the current temperature and load of a motor.
+ * ctrDynamixelTemperatureChart is used to plot the current temperature and load of a motor.
  * 
  * This component isn't used anymore but have not been suppressed as
  * it could be useful in some way in the future.
  * 
  * */
 
-namespace GripperControler.Dynamixel.UI
+namespace Gripper.UI
 {
-    public partial class ctrChart : UserControl
+    public partial class ctrDynamixelTemperatureChart : UserControl
     {
         #region MEMBER
         private int x = 0;
@@ -33,12 +33,12 @@ namespace GripperControler.Dynamixel.UI
         #endregion
 
         #region INITIALIZATION
-        public ctrChart()
+        public ctrDynamixelTemperatureChart()
         {
             InitializeComponent();
             lblCurrentInfo.Text = "";
             PCANCom.Instance.OnCANMessageReceived += CANMessageReceived;
-            DynamixelEvents.Instance.OnMotorSelectedChange += MotorDataReceived;
+            GripperEvent.Instance.OnMotorSelectedChange += MotorDataReceived;
         }
         
         private void ctrChart_Load(object sender, EventArgs e)
@@ -53,7 +53,7 @@ namespace GripperControler.Dynamixel.UI
         #endregion
 
         #region NEW MOTOR SELECTED MESSAGE (OBSERVER PATTERN)
-        private void MotorDataReceived(object sender, DynamixelEvents.MotorSelectedChangeArgs e)
+        private void MotorDataReceived(object sender, GripperEvent.MotorSelectedChangeArgs e)
         {
             motor = e.motor;
             clearChart();
@@ -132,7 +132,7 @@ namespace GripperControler.Dynamixel.UI
         #region SEND GET TEMPERATURE AND LOAD COMMAND
         private void tmrGetTemperatureAndLoad_Tick(object sender, EventArgs e)
         {
-            Dynamixel2CANQueue.addGetInstruction(DynamixelConst.PRESENT_TEMPERATURE, motor.id, DynamixelConst.PRESENT_LOAD_L, 4);
+            Gripper2CANQueue.addGetInstruction(DynamixelConst.PRESENT_TEMPERATURE, motor.id, DynamixelConst.PRESENT_LOAD_L, 4);
             //CANQueue.Instance.executeLast();
         }
         #endregion

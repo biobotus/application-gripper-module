@@ -1,6 +1,6 @@
-﻿namespace GripperControler.Dynamixel.UI
+﻿namespace Gripper.UI
 {
-    partial class ctrMotorPosition
+    partial class ctrDynamixelPosition
     {
         /// <summary> 
         /// Required designer variable.

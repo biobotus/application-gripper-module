@@ -11,7 +11,7 @@ using System.Threading.Tasks;
  * 
  * */
 
-namespace PCAN
+namespace PCAN.Driver
 {
     class CANDeviceConstant
     {

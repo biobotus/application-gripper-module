@@ -8,16 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using Dynamixel.Driver;
-using Dynamixel.Events;
-using PCAN;
+using Gripper.Driver;
+using Gripper.Events;
+using PCAN.Driver;
 
 /* Autor: Dave Plouffe
  * 
  * ctrDynamixelScanner is used to detect all motors that are connected together
  * on the board.
  * 
- * Basicly, when the button "scan" is clicked, a timer is set to enable.
+ * Basically, when the button "scan" is clicked, a timer is set to enable.
  * Then, each time the timer ticks, a CAN command is sent
  * to retrieve the Model, the Firmware of the motor id. If the motor id
  * exist, a CAN message will be received with the information wanted.
@@ -30,7 +30,7 @@ using PCAN;
  * 
  * */
 
-namespace GripperControler.Dynamixel.UI
+namespace Gripper.UI
 {
 
     public partial class ctrDynamixelScanner : UserControl
@@ -110,7 +110,7 @@ namespace GripperControler.Dynamixel.UI
             {
                 int index = lstDynamixel.SelectedItems[0].Index;
                 CANQueue.Instance.clearQueue();
-                DynamixelEvents.Instance.postMotorSelectedChangeEvent(motors[index]);
+                GripperEvent.Instance.postMotorSelectedChangeEvent(motors[index]);
             }
             catch (Exception ex) { }
         }
@@ -162,7 +162,7 @@ namespace GripperControler.Dynamixel.UI
         private void getMotorInfo(byte motorID)
         {
             // Retreive Model, Firmware if the motor exist
-            Dynamixel2CANQueue.getModelAndFirmware(DynamixelConst.MODEL_NUMBER_L, motorID);
+            Gripper2CANQueue.getModelAndFirmware(DynamixelConst.MODEL_NUMBER_L, motorID);
         }
 
         #endregion
